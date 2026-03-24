@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pharmacy Inventory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2" />
+  </head>
+  <body>
+    {% if user.is_authenticated %}
+    <nav class="sidebar">
+      <div class="sidebar-header">PharmaVerify</div>
+      <ul class="nav-links">
+        <li><a href="{% url 'inventory:dashboard' %}">Dashboard</a></li>
+        <li><a href="{% url 'inventory:medicine_list' %}">Inventory</a></li>
+        {% if user.is_staff or user.is_superuser %}
+        <!-- Admin role check -->
+        <li><a href="{% url 'inventory:admin_dashboard' %}">Admin Panel</a></li>
+        {% endif %}
+        <li>
+          <a href="#" onclick="document.getElementById('logout-form').submit()"
+            >Logout</a
+          >
+        </li>
+      </ul>
+      <div class="user-info">
+        Logged in as: <strong>{{ user.username }}</strong>
+        <form
+          id="logout-form"
+          action="{% url 'logout' %}"
+          method="post"
+          style="display: none"
+        >
+          {% csrf_token %}
+        </form>
+      </div>
+    </nav>
+    <main class="main-content">{% block content %}{% endblock %}</main>
+    {% else %}
+    <main class="auth-main">{% block auth_content %}{% endblock %}</main>
+    {% endif %}
+  </body>
+</html>

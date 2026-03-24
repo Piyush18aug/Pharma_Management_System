@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <h2>{% if form.instance.pk %}Edit Medicine{% else %}Add Medicine{% endif %}</h2>
+</div>
+
+<div class="card" style="max-width: 600px;">
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            <label>{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+            <div class="error-msg">
+                {% for error in field.errors %}{{ error }}{% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <div style="margin-top: 2rem;">
+            <button type="submit" class="btn btn-primary">Save Medicine</button>
+            <a href="{% url 'inventory:medicine_list' %}" class="btn"
+                style="background: #e5e7eb; margin-left: 1rem;">Cancel</a>
+        </div>
+    </form>
+</div>
+<script>
+    // Simple client-side styles for inputs
+    document.querySelectorAll('input, select').forEach(el => el.classList.add('form-control'));
+</script>
+{% endblock %}
