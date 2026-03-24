@@ -50,3 +50,4 @@ This system helps reduce manual effort, avoid medicine wastage, and improve oper
 ```bash
 git clone https://github.com/Piyush18aug/Pharma_Management_System.git
 cd Pharma_Management_System
+
